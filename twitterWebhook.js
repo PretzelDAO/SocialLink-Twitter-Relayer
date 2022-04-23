@@ -80,6 +80,6 @@ const Service = {
 };
 
 
-Service.registerSubscribeWebhook();
+// Service.registerSubscribeWebhook();
 
 module.exports = Service;
