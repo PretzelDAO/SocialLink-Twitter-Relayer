@@ -41,6 +41,18 @@ const Service = {
         const followedId = event.target.id;
         const followedName = event.target.name;
         console.log(`EVENT: ${followedFromName} (${followedFromId}) has followed ${followedName} (${followedId})`);
+        // DO SOMETHING WITH THE DATA!!!
+    },
+    computeUnFollowId: (event) => {
+        if (event.type !== 'unfollow') {
+            return;
+        } 
+        const followedFromId = event.source.id;
+        const followedFromName = event.source.name;
+        const followedId = event.target.id;
+        const followedName = event.target.name;
+        console.log(`EVENT: ${followedFromName} (${followedFromId}) has UN_followed ${followedName} (${followedId})`);
+        // DO SOMETHING WITH THE DATA!!!
     },
     registerSubscribeWebhook: async function registerSubscribeWebhook() {
         console.log(process.env.WEBHOOK_URL);
