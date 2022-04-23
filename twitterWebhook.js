@@ -2,6 +2,7 @@
 const Twitter = require('twit');
 const crypto = require('crypto');
 
+const { processTwitterFollow } = require('./walletService')
 
 const CONFIG = {
     consumer_key: process.env.CONSUMER_KEY,
@@ -35,18 +36,22 @@ const Service = {
     computeFollowId: (event) => {
         if (event.type !== 'follow') {
             return;
-        } 
+        }
         const followedFromId = event.source.id;
         const followedFromName = event.source.name;
         const followedId = event.target.id;
         const followedName = event.target.name;
         console.log(`EVENT: ${followedFromName} (${followedFromId}) has followed ${followedName} (${followedId})`);
         // DO SOMETHING WITH THE DATA!!!
+
+        processTwitterFollow(followedFromId, followedId)
+
+
     },
     computeUnFollowId: (event) => {
         if (event.type !== 'unfollow') {
             return;
-        } 
+        }
         const followedFromId = event.source.id;
         const followedFromName = event.source.name;
         const followedId = event.target.id;

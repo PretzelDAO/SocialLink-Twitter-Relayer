@@ -1,5 +1,6 @@
-const cors = require('cors');
 const webhookrouter = require('./webhookrouter');
+const lensRouter = require('./lensRouter');
+
 
 module.exports = (app) => {
     app.get('/', (req, res) => {
@@ -7,5 +8,6 @@ module.exports = (app) => {
         res.sendStatus(200);
     });
     app.use('/webhook', webhookrouter);
+    app.use('/lens', lensRouter);
 }
 
