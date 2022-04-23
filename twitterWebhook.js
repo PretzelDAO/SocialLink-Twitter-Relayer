@@ -12,6 +12,8 @@ const CONFIG = {
 
 const twitterClient = new Twitter(CONFIG);
 
+let exponentialBackoff = 1;
+
 const Service = {
     tokenverify: (req, res) => {
         /* Handle crc_token. */
@@ -69,7 +71,7 @@ const Service = {
                 console.log('webhook url registered, subscribing...', 2);
                 twitterClient.post('account_activity/all/Hackathon/subscriptions', { webhook_id: data.id }, (err2) => {
                     if (err2) {
-                        console.log('GET webhooks ERROR', 4);
+                        console.log('GET webhooks ERROR', err2, 4);
                         return;
                     }
                     console.log('webhook url registered', 2);
@@ -80,6 +82,6 @@ const Service = {
 };
 
 
-// Service.registerSubscribeWebhook();
+Service.registerSubscribeWebhook();
 
 module.exports = Service;

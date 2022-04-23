@@ -3,11 +3,6 @@ const router = require('express').Router();
 const crypto = require('crypto');
 
 const twitterInterface = require('./twitterWebhook');
-const CONSUMER_SECRET = '';
-
-router.post('/', (req, res) => {
-  res.send({ api: 'twitter' });
-});
 
 const twitterSigVerify = (req) => {
   const twitterSignature = req.headers['x-twitter-webhooks-signature'];
@@ -16,7 +11,7 @@ const twitterSigVerify = (req) => {
   const requestBody = req.rawBody;
 
   let timestamp = null;
-  if (parsedBody.tweet_create_events) {
+  /* if (parsedBody.tweet_create_events) {
     timestamp = parsedBody.tweet_create_events[0].timestamp_ms;
   } else if (parsedBody.favorite_events) {
     timestamp = parsedBody.favorite_events[0].timestamp_ms;
@@ -32,9 +27,9 @@ const twitterSigVerify = (req) => {
     console.error(`!ACCESS REVOKED!: ${JSON.stringify(parsedBody)}`);
     return false;
   } else {
-    console.log(`Unkown Request in webhook: ${parsedBody}`, 4);
+    console.log(`Unkown Request in webhook: ${JSON.stringify(parsedBody)}`, 4);
     return false;
-  }
+  } */
 
   if (!twitterSignature || !requestBody || !timestamp) {
     console.error(`FAIL Headers: ${JSON.stringify(req.headers)} body: ${JSON.stringify(req.body)}`);
@@ -51,7 +46,7 @@ const twitterSigVerify = (req) => {
     return false;
   } */
 
-  const correctSignature = crypto.createHmac('sha256', CONSUMER_SECRET).update(requestBody).digest('base64');
+  const correctSignature = crypto.createHmac('sha256', process.env.CONSUMER_SECRET).update(requestBody).digest('base64');
   const base64Signature = `sha256=${correctSignature}`;
 
   let signaturesMatch = false;
@@ -69,11 +64,11 @@ const twitterSigVerify = (req) => {
   return false;
 };
 
-router.get('/webhooks', (req, res) => {
+router.get('/', (req, res) => {
   twitterInterface.tokenverify(req, res);
 });
 
-router.post('/webhooks', (req, res) => {
+router.post('/', (req, res) => {
   if (twitterSigVerify(req) !== true) {
     res.sendStatus(403);
     return;
