@@ -31,7 +31,9 @@ const lenseHubContract = new ethers.Contract(contractAddresses['lensHub'], LENSH
 
 async function linkTwitter(profileId, code) {
     // technically we should do some verifcation here ...
+    console.log(code);
     const twitterProfile = await attemptTwitterCodeExchange(code)
+    console.log(twitterProfile);
 
     // if (!!twitterProfile) {
     //     console.error('Could not retrieve twitter profile by code!')
@@ -53,8 +55,6 @@ async function linkTwitter(profileId, code) {
         console.error("Couldn't store the mapping")
         return false
     }
-
-    return false
 }
 
 async function processTwitterFollow(followingId, followedId) {
