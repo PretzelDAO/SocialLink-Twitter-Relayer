@@ -27,7 +27,20 @@ const Service = {
     },
     incomingWebhook: (req, res) => {
         console.log(req.body);
+        if (req.body.follow_events) {
+            Service.computeFollowId(req.body.follow_events[0]);
+        }
         res.sendStatus(200);
+    },
+    computeFollowId: (event) => {
+        if (event.type !== 'follow') {
+            return;
+        } 
+        const followedFromId = event.source.id;
+        const followedFromName = event.source.name;
+        const followedId = event.target.id;
+        const followedName = event.target.name;
+        console.log(`EVENT: ${followedFromName} (${followedFromId}) has followed ${followedName} (${followedId})`);
     },
     registerSubscribeWebhook: async function registerSubscribeWebhook() {
         console.log(process.env.WEBHOOK_URL);

@@ -69,10 +69,10 @@ router.get('/', (req, res) => {
 });
 
 router.post('/', (req, res) => {
-  if (twitterSigVerify(req) !== true) {
+  /* if (twitterSigVerify(req) !== true) {
     res.sendStatus(403);
     return;
-  }
+  } */
 
   twitterInterface.incomingWebhook(req, res);
 });
