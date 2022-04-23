@@ -1,5 +1,5 @@
 const ethers = require('ethers')
-const SHARED_CONTRACT_ABI = require('./SHARED_CONTRACT.json')
+const SHARED_CONTRACT_ABI = require('./abis/SHARED_CONTRACT.json')
 const LENSHUB_ABI = require('./abis/LENSHUB').ABI
 const axios = require('axios');
 require('dotenv').config()
